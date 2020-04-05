@@ -5,6 +5,8 @@
 # CMake initialisation.
 cmake_minimum_required(VERSION 3.1)
 
+set(CMAKE_CXX_STANDARD 17)
+
 # Project name
 project(QuEST_Project)
 
@@ -12,9 +14,7 @@ project(QuEST_Project)
 # ----- USER OPTIONS ----------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-set(USER_SOURCE  "examples/tutorial_example.c"  CACHE STRING "Source to build with QuEST library")
-set(OUTPUT_EXE   "demo"  CACHE STRING "Executable to compile to")
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 option(TESTING "Enable test suite functionality -- requires test suite available" ON)
 set(QuEST_UTIL_DIR_NAME "utilities" CACHE STRING
   "Name of the directory containing the QuEST utilities.")
@@ -38,17 +38,22 @@ endif()
 # ----- USER EXECUTABLE -------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-message(STATUS "Compiling ${USER_SOURCE} to executable ${OUTPUT_EXE}")
+message(STATUS "Compiling ${USER_SOURCE} to executable qq_sim")
 
 
 # Create user executable
-add_executable(${OUTPUT_EXE} ${USER_SOURCE})
+add_executable(qq_sim ${CMAKE_SOURCE_DIR}/qq/qq_sim.cc
+        qq/methods.h
+        qq/methods.cc
+        qq/types.h
+        qq/qasm_parser.h
+        qq/qasm_parser.cc qq/types.cc qq/utils.cc qq/utils.h)
 
 # Link libraries to user executable, including QuEST library
 if (WIN32)
-    target_link_libraries(${OUTPUT_EXE} QuEST)
+    target_link_libraries(qq_sim QuEST)
 else ()
-    target_link_libraries(${OUTPUT_EXE} QuEST m)
+    target_link_libraries(qq_sim QuEST m)
 endif()
 
 
@@ -96,3 +101,4 @@ add_custom_target( update_QuEST_lib_loc
   COMMAND ${CMAKE_COMMAND} -DQuEST_ROOT=${PROJECT_SOURCE_DIR} -DQuESTPy_PATH=${QuESTPy_PATH} -DQuEST_LIB_EXACT=${QuEST_LIB_EXACT} -DQuEST_LIB_PATH=${QuEST_LIB_PATH} -P ${PROJECT_SOURCE_DIR}/cmake/QuESTPyLib.cmake
   )
 
+install(TARGETS qq_sim DESTINATION bin)
