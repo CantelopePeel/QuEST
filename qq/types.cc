@@ -3,6 +3,7 @@
 //
 
 #include "types.h"
+#include <algorithm>
 
 bool clause_lit_cmp(const Literal& lit0, const Literal& lit1) {
     Variable var0 = lit_to_var(lit0);
