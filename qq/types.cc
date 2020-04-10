@@ -4,15 +4,24 @@
 
 #include "types.h"
 
+bool clause_lit_cmp(const Literal& lit0, const Literal& lit1) {
+    Variable var0 = lit_to_var(lit0);
+    Variable var1 = lit_to_var(lit1);
+
+    return var0 < var1;
+} 
+
+
 ClauseList::ClauseList()
     : clauses_(), variables_() {}
 
-void ClauseList::add_clause(const Clause& clause) {
+void ClauseList::add_clause(Clause clause) {
     for (const Literal& lit : clause) {
         Variable var = lit_to_var(lit);
         variables_.insert(var);
     }
-
+    
+    std::sort(clause.begin(), clause.end(), clause_lit_cmp);
     clauses_.push_back(clause);
 }
 

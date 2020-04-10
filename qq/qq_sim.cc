@@ -8,6 +8,7 @@
 #include <vector>
 #include <cmath>
 #include <map>
+#include <algorithm>
 #include <unordered_map>
 #include <bitset>
 #include "types.h"

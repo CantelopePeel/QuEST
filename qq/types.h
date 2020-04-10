@@ -24,7 +24,7 @@ class ClauseList {
     public:
         ClauseList();
 
-        void add_clause(const Clause& clause);
+        void add_clause(Clause clause);
         void add_variable(const Variable& variable);
         bool validate_clause_list();
         bool check_satisfied(const Assignment& assignment);
