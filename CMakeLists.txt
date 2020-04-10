@@ -5,7 +5,7 @@
 # CMake initialisation.
 cmake_minimum_required(VERSION 3.1)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 
 # Project name
 project(QuEST_Project)
@@ -14,7 +14,9 @@ project(QuEST_Project)
 # ----- USER OPTIONS ----------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O2")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O2")
+
 option(TESTING "Enable test suite functionality -- requires test suite available" ON)
 set(QuEST_UTIL_DIR_NAME "utilities" CACHE STRING
   "Name of the directory containing the QuEST utilities.")
@@ -48,6 +50,11 @@ add_executable(qq_sim ${CMAKE_SOURCE_DIR}/qq/qq_sim.cc
         qq/types.h
         qq/qasm_parser.h
         qq/qasm_parser.cc qq/types.cc qq/utils.cc qq/utils.h)
+
+target_compile_definitions(qq_sim
+    PRIVATE
+    QuEST_PREC=${PRECISION}
+)
 
 # Link libraries to user executable, including QuEST library
 if (WIN32)
