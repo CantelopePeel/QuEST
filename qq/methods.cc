@@ -37,8 +37,8 @@ void compute_clause(Qureg qubits, const Clause& clause, const int target_qubit) 
     }
 
     ComplexMatrix2 pauli_x = {
-            .real={{0.,1.},{1.,0.}},
-            .imag={{0.,0.},{0.,0.}}
+            .real={{0.f,1.f},{1.f,0.f}},
+            .imag={{0.f,0.f},{0.f,0.f}}
     };
 
     multi_control_toffoli(qubits, control_qubits, anti_control_qubits, target_qubit, pauli_x);
@@ -78,8 +78,8 @@ void grovers_algorithm_iteration(Qureg qubits, const ClauseList& clause_list, Qu
         }
 
         ComplexMatrix2 pauli_x = {
-                .real={{0.,1.},{1.,0.}},
-                .imag={{0.,0.},{0.,0.}}
+                .real={{0.f,1.f},{1.f,0.f}},
+                .imag={{0.f,0.f},{0.f,0.f}}
         };
 
         // Tie clauses.
